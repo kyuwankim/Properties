@@ -22,8 +22,9 @@ public class MainActivity extends AppCompatActivity {
 
         init();
 
-
         sharedpreferences = getSharedPreferences("settigns", MODE_PRIVATE);
+
+        loadPreference();
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,15 +45,16 @@ public class MainActivity extends AppCompatActivity {
         btn = (Button) findViewById(R.id.button);
     }
 
+
     // 저장해둔 설정값 가져오기
     private void loadPreference() {
         String name = sharedpreferences.getString("name", "[none]");
         String email = sharedpreferences.getString("email", "[none]");
         String password = sharedpreferences.getString("password", "[none]");
 
-        this.name.setText(name);
-        this.email.setText(email);
-        this.password.setText(password);
+        this.name.setHint(name);
+        this.email.setHint(email);
+        this.password.setHint(password);
 
     }
 
@@ -68,4 +70,19 @@ public class MainActivity extends AppCompatActivity {
         editor.commit();
 
     }
+
+    // 삭제하기
+    private void removePreferences(String key) {
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.remove(key);
+        editor.commit();
+    }
+
+    // 전체 삭제하기
+    private void removeAllPreferences() {
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.clear();
+        editor.commit();
+    }
+
 }
